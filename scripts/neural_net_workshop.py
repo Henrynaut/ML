@@ -100,17 +100,47 @@ def update_weights(net,inp,alpha):
             prev_layer = net[i-1]
             for neuron in prev_layer:
                 inputs.append(neuron.output)
-            curr_layer = net[i]
-            for neuron in curr_layer:
-                for j in range(len(inputs)):
-                    neuron.weights[j] += alpha*neuron.delta*inputs[j]
-                neuron.weights[-1]+=alpha*neuron.delta
-                
-net = gen_net([2,2,2],[(sig,sig),[dsig,dsig]])
-print(feed_fwd(net,[0.2,0.3]))
-for i in range(len(net)):
-    for j in range(len(net[i])):
-        print(net[i][j].weights)
+        curr_layer = net[i]
+        for neuron in curr_layer:
+            for j in range(len(inputs)):
+                neuron.weights[j] += alpha*neuron.delta*inputs[j]
+            neuron.weights[-1]+=alpha*neuron.delta
+
+#Define training approach
+def train(net,train_data,alpha,epoch):
+    for curr_epoch_no in range(epoch):
+        sums = 0
+        sample_no = 0
+        # Accuracy Count (number of samples that are right)
+        acc_cnt = 0
+        for sample in train_data:
+            outputs = feed_fwd(net,sample[0])
+            expected = sample[1]
+            sums+=sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
+            if expected.index(max(expected) == outputs.index(max(outputs))):
+                acc_cnt += 1
+            back_prop(net,expected)
+            update_weights(net,sample[0],alpha)
+        # Metadata on how well it's doing
+        print('epoch_no:', curr_epoch_no,'loss:', sums, 'accuracy:', acc_cnt)
+
+net = gen_net([2,30,30,2],[(sig,sig,sig),[dsig,dsig,dsig]])
+train(net,[[[0,0],[1,0]],
+                 [[0,1],[1,0]],
+                 [[1,0],[1,0]],
+                 [[1,1],[0,1]]],
+                 5, 100)
+
+# Code to test out neural network output
+# net = gen_net([2,2,2],[(sig,sig),[dsig,dsig]])
+# print(feed_fwd(net,[0.2,0.3]))
+# for i in range(len(net)):
+#     for j in range(len(net[i])):
+#         print(net[i][j].weights)
 
 # print("--------------------------")
 # net = back_prop(net,[1,0])
+# net = update_weights(net,[0.2,0.3],0.2)
+# for i in range(len(net)):
+#     for j in range(len(net[i])):
+#         print(net[i][j].weights)
