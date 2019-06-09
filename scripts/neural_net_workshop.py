@@ -24,6 +24,7 @@ class Neuron:
     def agr(self,x):
         bias = self.weights[-1]
         out = np.inner(self.weights.copy()[:-1],x) + bias
+        return out
     def activation(self,inp):
         self.output = self.func(inp)
         return self.output
@@ -85,3 +86,31 @@ def back_prop(net, target):
         for neuron in layer:
             neuron.delta = errors[j]*neuron.dfunc(neuron.output)
             j+=1
+    return net
+
+
+# Define how much to update the weights by everytime
+# Alpha is the learning rate, but if too high it may overshoot
+def update_weights(net,inp,alpha):
+    for i in range(len(net)):
+        if i==0:
+            inputs = inp
+        else:
+            inputs = []
+            prev_layer = net[i-1]
+            for neuron in prev_layer:
+                inputs.append(neuron.output)
+            curr_layer = net[i]
+            for neuron in curr_layer:
+                for j in range(len(inputs)):
+                    neuron.weights[j] += alpha*neuron.delta*inputs[j]
+                neuron.weights[-1]+=alpha*neuron.delta
+                
+net = gen_net([2,2,2],[(sig,sig),[dsig,dsig]])
+print(feed_fwd(net,[0.2,0.3]))
+for i in range(len(net)):
+    for j in range(len(net[i])):
+        print(net[i][j].weights)
+
+# print("--------------------------")
+# net = back_prop(net,[1,0])
