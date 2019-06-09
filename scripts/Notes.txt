@@ -3,7 +3,7 @@ Written by Neil McHenry, June 9th, 2019
 Machine Learning Basics:
 
     -Neurons
-        Nodes that can be inputs, hidden, or outputs
+        Nodes that can be inputs, hidden, biases, or outputs
     -Weights
         Connections between neurons have weighted
     -Targets
@@ -11,4 +11,6 @@ Machine Learning Basics:
     -Loss Function
         Relates the output to the target, and describes how far off it is from the target
     -Activation Function
-        Theta(n) = (1)/(1+e^-n)
+        Theta(n) = (1)/(1+e^-n), a nonlinear function
+    -Forward propagation and back propagation
+        Necessary for configuring the weighst
