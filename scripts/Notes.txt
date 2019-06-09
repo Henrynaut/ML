@@ -1,0 +1,14 @@
+Written by Neil McHenry, June 9th, 2019
+
+Machine Learning Basics:
+
+    -Neurons
+        Nodes that can be inputs, hidden, or outputs
+    -Weights
+        Connections between neurons have weighted
+    -Targets
+        The final result that the neural network is trying to achieve
+    -Loss Function
+        Relates the output to the target, and describes how far off it is from the target
+    -Activation Function
+        Theta(n) = (1)/(1+e^-n)
