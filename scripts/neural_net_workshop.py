@@ -124,12 +124,12 @@ def train(net,train_data,alpha,epoch):
         # Metadata on how well it's doing
         print('epoch_no:', curr_epoch_no,'loss:', sums, 'accuracy:', acc_cnt)
 
-net = gen_net([2,30,30,2],[(sig,sig,sig),[dsig,dsig,dsig]])
-train(net,[[[0,0],[1,0]],
+net = gen_net([2,100,100,2],[(sig,sig,sig),[dsig,dsig,dsig]])
+train(net,[[[0,0],[0,1]],
                  [[0,1],[1,0]],
                  [[1,0],[1,0]],
                  [[1,1],[0,1]]],
-                 5, 100)
+                 2, 100)
 
 # Code to test out neural network output
 # net = gen_net([2,2,2],[(sig,sig),[dsig,dsig]])
